@@ -18,7 +18,7 @@ class _projectState extends State<project> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.green),
       debugShowCheckedModeBanner: false,
-      home: mainscreen(),
+      home: Mainscreen(),
     );
   }
 }

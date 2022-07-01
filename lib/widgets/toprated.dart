@@ -1,3 +1,4 @@
+import 'package:finalproject/widgets/topratedinfo.dart';
 import 'package:flutter/material.dart';
 
 
@@ -17,33 +18,55 @@ class TopRatedMovies extends StatelessWidget {
           
           SizedBox(height: 10),
           Container(
-            color: Colors.grey,
+            //color: Colors.grey,
               height: 270,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: toprated.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      width: 140,
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://image.tmdb.org/t/p/w500' +
-                                        toprated[index]['poster_path']),
+                    return InkWell(
+                       onTap: () {
+                         Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => topratedinfo(
+                                      name: toprated[index]['title'],
+                                      bannerurl:
+                                          'https://image.tmdb.org/t/p/w500' +
+                                              toprated[index]['backdrop_path'],
+                                      posterurl:
+                                          'https://image.tmdb.org/t/p/w500' +
+                                              toprated[index]['poster_path'],
+                                      description: toprated[index]['overview'],
+                                      vote: toprated[index]['vote_average']
+                                          .toString(),
+                                      launch_on: toprated[index]
+                                          ['release_date'],
+                                    )));
+                        
+                      },
+                      child: Container(
+                        width: 140,
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      'https://image.tmdb.org/t/p/w500' +
+                                          toprated[index]['poster_path']),
+                                ),
                               ),
+                              height: 200,
                             ),
-                            height: 200,
-                          ),
-                          SizedBox(height: 5),
-                          Container(
-                            child:Text(toprated[index]['title'] != null
-                                    ? toprated[index]['title']
-                                    : 'Loading')
-                          )
-                        ],
+                            SizedBox(height: 5),
+                            Container(
+                              child:Text(toprated[index]['title'] != null
+                                      ? toprated[index]['title']
+                                      : 'Loading')
+                            )
+                          ],
+                        ),
                       ),
                     );
                   }))

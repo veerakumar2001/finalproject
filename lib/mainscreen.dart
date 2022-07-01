@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 
 import 'package:tmdb_api/tmdb_api.dart';
 
-class mainscreen extends StatefulWidget {
-  const mainscreen({Key? key}) : super(key: key);
+class Mainscreen extends StatefulWidget {
+  const Mainscreen({Key? key}) : super(key: key);
 
   @override
-  State<mainscreen> createState() => _mainscreenState();
+  State<Mainscreen> createState() => _MainscreenState();
 }
 
 // ignore: camel_case_types
-class _mainscreenState extends State<mainscreen> {
+class _MainscreenState extends State<Mainscreen> {
 
 List trendingmovies = [];
 List topratedmovies=[];
@@ -28,13 +28,16 @@ final readaccesstoken1='eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ODc3Zjk1N2UxZTU4MTBlODE
   }
   loadmovies()async{
     TMDB tmdbCustomLogs= TMDB(ApiKeys(apikey1,readaccesstoken1),
-  logConfig: ConfigLogger(
+  logConfig:const  ConfigLogger(
     showLogs: true,
   showErrorLogs: true));
   Map trendingresult=await tmdbCustomLogs.v3.trending.getTrending();
   Map topratedresult=await tmdbCustomLogs.v3.movies.getTopRated();
   Map tvresult=await tmdbCustomLogs.v3.tv.getPopular();
-  
+   print(trendingresult);
+   print(topratedresult);
+   print(tvresult);
+  //print(trendingmovies);
   setState(() {
     trendingmovies=trendingresult['results'];
     topratedmovies=topratedresult['results'];
@@ -42,20 +45,25 @@ final readaccesstoken1='eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ODc3Zjk1N2UxZTU4MTBlODE
   }
   
   );
-  debugPrint('$trendingresult');
-  print(trendingmovies);
+  
   
   }
   
   @override
   
   Widget build(BuildContext context) {
+    print("................................................................");
+    loadmovies();
+    print("................................................................");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
         elevation: 0,
-        leading: Icon(Icons.menu,color: Colors.black,),
-        title: Text("Movies Hub",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+        leading:   IconButton(
+    onPressed: () {},
+    icon: Icon(Icons.home),
+        color: Colors.black,),
+        title: const  Text("Movies Hub",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,),
       ),
       body: ListView(
@@ -64,6 +72,7 @@ final readaccesstoken1='eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ODc3Zjk1N2UxZTU4MTBlODE
          TV(tv: tv)],
         
       ),
+     // backgroundColor: Colors.black,
     );
   }
 }
